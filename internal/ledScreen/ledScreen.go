@@ -1,7 +1,6 @@
 package ledScreen
 
 import (
-	"fmt"
 	ws2811 "github.com/rpi-ws281x/rpi-ws281x-go"
 	_ "image/png"
 )
@@ -10,7 +9,6 @@ const (
 	brightness = 90
 	width      = 32
 	height     = 8
-	fps		   = 10
 	ledCount  = width * height
 )
 
@@ -23,31 +21,21 @@ type wsEngine interface {
 }
 
 var ws wsEngine
-var running = false
 
 func coordinatesToIndex(x int, y int) int {
-	//fmt.Println(x, y, x * height + y)
-	return x * height + y
+	if x%2 == 0 {
+		return x * height + y
+	}
+	return (x + 1) * height - y - 1
 }
 
 func rgbToColor(r uint8, g uint8, b uint8) uint32 {
 	return uint32(r)<<16 + uint32(g)<<8 + uint32(b)
 }
 
-//func (inv *invader) display() error {
-//	bounds := inv.img[inv.current].Bounds()
-//	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-//		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-//			r, g, b, _ := inv.img[inv.current].At(x, y).RGBA()
-//			inv.ws.Leds(0)[coordinatesToIndex(bounds, x, y)] = rgbToColor(r, g, b)
-//		}
-//	}
-//	return inv.ws.Render()
-//}
-
 func clear() error {
 	for i := 0; i < ledCount; i += 1 {
-		ws.Leds(0)[i] = rgbToColor(0,255,0)
+		ws.Leds(0)[i] = rgbToColor(0,0,0)
 	}
 
 	return ws.Render()
@@ -68,12 +56,6 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
-
-	//for count := 0; count < 50; count++ {
-	//	inv.display()
-	//	inv.next()
-	//	time.Sleep(200 * time.Millisecond)
-	//}
 }
 
 func NextFrame(pixels[32][8][3] uint8) error {
@@ -85,11 +67,7 @@ func NextFrame(pixels[32][8][3] uint8) error {
 
 			index := coordinatesToIndex(i, j)
 
-			rgb := rgbToColor(r, g, b)
-
-			fmt.Println(index, r, g, b, rgb)
-
-			ws.Leds(0)[index] = rgb
+			ws.Leds(0)[index] = rgbToColor(r, g, b)
 		}
 	}
 	return ws.Render()
