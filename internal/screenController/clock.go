@@ -6,16 +6,16 @@ import (
 	"time"
 )
 
-func Draw(x int, color[3]uint8, pixels[32][8][3]uint8) [32][8][3]uint8 {
+func Draw(x int, color [3]uint8, pixels [32][8][3]uint8) [32][8][3]uint8 {
 	position := x
 	hours, minutes, seconds := time.Now().Local().Clock()
 
 	hourString := fmt.Sprintf("%02d", hours)
 	step1 := text.DrawString(hourString, position, color, pixels)
-	position += 2 * (text.FontWidth + 1) - 1
+	position += 2*(text.FontWidth+1) - 1
 
 	var sign byte
-	if seconds % 2 == 0 {
+	if seconds%2 == 0 {
 		sign = ' '
 	} else {
 		sign = ':'

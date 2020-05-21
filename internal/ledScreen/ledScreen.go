@@ -8,7 +8,7 @@ const (
 	brightness = 90
 	Width      = 32
 	Height     = 8
-	ledCount  = Width * Height
+	ledCount   = Width * Height
 )
 
 type wsEngine interface {
@@ -23,9 +23,9 @@ var ws wsEngine
 
 func coordinatesToIndex(x int, y int) int {
 	if x%2 == 0 {
-		return x * Height + y
+		return x*Height + y
 	}
-	return (x + 1) * Height - y - 1
+	return (x+1)*Height - y - 1
 }
 
 func rgbToColor(r uint8, g uint8, b uint8) uint32 {
@@ -34,7 +34,7 @@ func rgbToColor(r uint8, g uint8, b uint8) uint32 {
 
 func clear() error {
 	for i := 0; i < ledCount; i += 1 {
-		ws.Leds(0)[i] = rgbToColor(0,0,0)
+		ws.Leds(0)[i] = rgbToColor(0, 0, 0)
 	}
 
 	return ws.Render()
@@ -57,7 +57,7 @@ func Init() {
 	}
 }
 
-func NextFrame(pixels[32][8][3] uint8) error {
+func NextFrame(pixels [32][8][3]uint8) error {
 	for i := 0; i < 32; i += 1 {
 		for j := 0; j < 8; j += 1 {
 			r := pixels[i][j][0]
