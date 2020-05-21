@@ -6,9 +6,9 @@ import (
 
 const (
 	brightness = 90
-	width      = 32
-	height     = 8
-	ledCount  = width * height
+	Width      = 32
+	Height     = 8
+	ledCount  = Width * Height
 )
 
 type wsEngine interface {
@@ -23,9 +23,9 @@ var ws wsEngine
 
 func coordinatesToIndex(x int, y int) int {
 	if x%2 == 0 {
-		return x * height + y
+		return x * Height + y
 	}
-	return (x + 1) * height - y - 1
+	return (x + 1) * Height - y - 1
 }
 
 func rgbToColor(r uint8, g uint8, b uint8) uint32 {

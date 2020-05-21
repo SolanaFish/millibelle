@@ -1,11 +1,11 @@
 package text
 
 const (
-	fontHeight = 8
-	fontWidth = 4
+	FontHeight = 8
+	FontWidth = 4
 )
 
-var font = map[byte][fontHeight][fontWidth]uint8{
+var font = map[byte][FontHeight][FontWidth]uint8{
 	'a': {
 		{0,1,1,0},
 		{1,0,0,1},
@@ -277,14 +277,14 @@ var font = map[byte][fontHeight][fontWidth]uint8{
 		{0,1,1,0},
 	},
 	'1': {
-		{0,1,0,0},
-		{1,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
-		{0,1,0,0},
+		{0,0,1,0},
+		{0,1,1,0},
+		{0,0,1,0},
+		{0,0,1,0},
+		{0,0,1,0},
+		{0,0,1,0},
+		{0,0,1,0},
+		{0,0,1,0},
 	},
 	'2': {
 		{0,1,1,0},
@@ -396,17 +396,27 @@ var font = map[byte][fontHeight][fontWidth]uint8{
 		{0,0,0,0},
 		{0,0,0,0},
 	},
+	' ': {
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+		{0,0,0,0},
+	},
 }
 
 func DrawSign(sign byte, x int, color [3]uint8, pixels[32][8][3]uint8) [32][8][3]uint8 {
 	value, ok := font[sign]
 
 	if !ok {
-		panic("Unknown sign to print")
+		panic("Unknown sign to print: " + string(sign))
 	}
 
-	for i := 0; i < fontHeight; i += 1 {
-		for j := 0; j < fontWidth; j += 1 {
+	for i := 0; i < FontHeight; i += 1 {
+		for j := 0; j < FontWidth; j += 1 {
 			if value[i][j] == 1 {
 				pixels[x + j][i] = color
 			}
@@ -418,7 +428,7 @@ func DrawSign(sign byte, x int, color [3]uint8, pixels[32][8][3]uint8) [32][8][3
 
 func DrawString(msg string, x int, color[3]uint8, pixels[32][8][3]uint8) [32][8][3]uint8 {
 	for pos, char := range msg {
-		letterStart := x + pos * (fontWidth + 1)
+		letterStart := x + pos * (FontWidth + 1)
 		pixels = DrawSign(byte(char), letterStart, color, pixels)
 	}
 
