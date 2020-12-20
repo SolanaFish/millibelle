@@ -1,0 +1,14 @@
+{
+    "wifi": {
+        "ssid": "GGGGG",
+        "password": "Kaczki69Kwaczki"
+    },
+    "display": {
+        "width": 32,
+        "height": 8,
+        "pin": 4,
+        "minBrightness": 128,
+        "baseBrightness": 128,
+        "maxBrightness": 128
+    }
+}
