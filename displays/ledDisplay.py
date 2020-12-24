@@ -1,7 +1,7 @@
-class Display(object):
+class ledDisplay(object):
     np = None
     config = None
-    brightness = 0
+    brightness = 255
     pixels = 0
 
     def __init__(self):
@@ -11,7 +11,7 @@ class Display(object):
         self.config = getConfig("display")
 
         self.pixels = self.config["width"] * self.config["height"]
-        
+
         self.np = neopixel.NeoPixel(machine.Pin(self.config["pin"]), self.pixels)
 
     def __coordinatesToIndex(self, x, y):
